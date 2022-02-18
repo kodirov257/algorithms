@@ -27,6 +27,7 @@ hs_err_pid*
 
 # Gradle files
 .gradle
+out/
 **/build/
 !src/**/build/
 

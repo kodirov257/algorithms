@@ -1,19 +1,38 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
-group 'org.example'
+group 'com.kodirov'
 version '1.0-SNAPSHOT'
 
+mainClassName = findProperty("main") ?: "com.kodirov.algorithms.${findProperty("algorithm") ?: 'missingPackage.missingClass'}"
+
+// Require Java 8
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 repositories {
+    mavenLocal()
+    // Use Maven Central for resolving dependencies.
     mavenCentral()
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+
+    // This dependency is used by the application.
+//    implementation 'com.google.guava:guava:31.0.1-jre'
 }
 
 test {
+    dependsOn cleanTest
+    testLogging.showStandardStreams = true
     useJUnitPlatform()
+}
+
+application {
+    // Define the main class for the application.
+    mainClassName = 'com.kodirov.algorithms.App'
 }
